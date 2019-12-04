@@ -22,7 +22,7 @@ def display(request):
     join_list = [
         {
             'name' : 'BusinessOwner',
-            'fields' : ['temp','TIN', 'Taxpayer_Name', 'SBN'],
+            'fields' : ['temp','TIN', 'Taxpayer Name', 'SBN'],
             'row_list': [['temp', doc.TIN.TIN, doc.TIN.Name, doc.SBN.SBN] for doc in Document.objects.order_by("TIN", "SBN")],
         }
     ]
