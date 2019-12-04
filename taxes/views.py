@@ -13,7 +13,7 @@ table_models = {
 def display(request):
     table_list = [ 
         {   
-            'name'      : table._meta.db_table[6:].capitalize(),
+            'name'      : keyv,
             'fields'    : [f.verbose_name for f in table._meta.fields],
             'row_list'  : [[field.value_to_string(obj) for field in table._meta.fields] for obj in table.objects.order_by(table._meta.fields[1].name)]
         } for keyv, table in table_models.items()
@@ -23,12 +23,21 @@ def display(request):
         {
             'name' : 'BusinessOwner',
             'fields' : ['temp','TIN', 'Taxpayer Name', 'SBN'],
-            'row_list': [['temp', doc.TIN.TIN, doc.TIN.Name, doc.SBN.SBN] for doc in Document.objects.order_by("TIN", "SBN")],
+            'row_list': [['temp', doc.TIN.TIN, doc.TIN.Name, doc.SBN.SBN] for doc in Document.objects.order_by("TIN__TIN", "SBN__SBN")],
         }
     ]
     
     table_list.extend(join_list)
 
+
+    for table in table_list:
+        if table['name'] == "Document":
+            table['row_list'] = []
+            for i,row in enumerate(Document.objects.order_by("DLN")):
+
+                table['row_list'].append([field.value_to_string(row) for field in Document._meta.fields])
+                table['row_list'][i][2] = "{}".format(row.SBN.SBN)
+                table['row_list'][i][3] = "{}".format(row.TIN.TIN)
 
     template = loader.get_template('taxes/display.html')
 

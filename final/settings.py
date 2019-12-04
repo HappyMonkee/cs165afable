@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=t99j%7n*t%rjy7!uqr4)5hw4&(8((k4-@oluaat5y6o8*0qq9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['cs165afable.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','cs165afable.herokuapp.com']
 
 # Application definition
 
@@ -130,12 +130,12 @@ PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
 STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Extra lookup directories for collectstatic to find static files
+# # Extra lookup directories for collectstatic to find static files
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
 
-#  Add configuration for static files storage using whitenoise
+# #  Add configuration for static files storage using whitenoise
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 import dj_database_url 
