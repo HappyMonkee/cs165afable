@@ -1,0 +1,140 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>CS 165 Phase 4</title>
+</head>
+
+<body>
+
+
+{% if table_name in table_models %}
+    <div class="container col-md-4">
+        {% if error_message %}
+            <p><strong> {{ error_message }} </strong></p>
+        {% endif %}
+        <form action="{% url 'taxes:process' table_name value_id %}" method="post">
+            {% csrf_token %}
+
+            {% if table_name == "Document" %}
+
+                <div class="form-group">
+                    <label for="DLN"> DLN: </label>
+                    <input class="form-control" id="DLN" type="number" min="1" name="DLN" value="{{ values.DLN }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="SBN"> SBN: </label>
+                    <input class="form-control" id="SBN" type="number" min="1" name="SBN" value="{{ values.SBN }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="TIN"> TIN: </label>
+                    <input class="form-control" id="TIN" type="number" min="1" name="TIN" value="{{ values.TIN }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="Registering Office"> Registering Office: </label>
+                    <input class="form-control" id="Registering Office" type="text" name="Registering_Office" value="{{ values.Registering_Office }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="BIR"> BIR Registration Date: </label>
+                    <input class="form-control" id="BIR" type="date" name="BIR_Registration_Date" value="{{ values.BIR_Registration_Date }}">
+                </div>
+
+                
+
+            {% elif table_name == "Taxpayer" %}
+                <div class="form-group">
+                    <label for="TIN"> TIN: </label>
+                    <input class="form-control" id ="TIN" type="number" min="1" name="TIN"  value="{{ values.TIN }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="Name"> Name: </label>
+                    <input class="form-control" id="Name" type="text" name="Name" value="{{ values.Name }}">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label"> Gender: </label> <br>
+                            
+                    <label class="radio-inline"> 
+                        <input type="radio" id="Male" name="Gender" value="Male" {% if values.Gender == 'Male'%} checked {% endif %}> 
+                            Male
+                    </label>
+
+                    <label class="radio-inline">
+                        <input type="radio" id="Female" name="Gender" value="Female" {% if values.Gender == 'Female'%} checked {% endif %}>
+                            Female
+                    </label>
+
+                    <label class="radio-inline">
+                        <input type="radio" id="Other" name="Gender" value="Other" {% if values.Gender == 'Other'%} checked {% endif %}>
+                            Other
+                    </label>
+
+                </div>
+
+                        
+                <div class="form-group">
+                    <label class="control-label"> Civil Status: </label> <br>
+                    <label class="radio-inline">
+                        <input  type="radio" name="Civil_Status" id="Single" value="Single" {% if values.Civil_Status == 'Single'%} checked {% endif %}>
+                        Single
+                    </label>
+
+                    <input  type="radio" name="Civil_Status" id="Married" value="Married" {% if values.Civil_Status == 'Married'%} checked {% endif %}>
+                        <label class="radio-inline">
+                        Married
+                    </label>
+                </div>
+                                
+
+                <div class="form-group">
+                    <label for="Birthday"> Birthday: </label>
+                    <input class="form-control" id="Birthday" type="date" name="Birthday" value="{{ values.Birthday }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="Email"> Email: </label>
+                    <input class="form-control" id="Email" type="email" name="Email" value="{{ values.Email }}">
+                </div>
+
+            {% elif table_name == "Business" %}
+                <div class="form-group">
+                    <label for="SBN"> SBN: </label>
+                    <input class="form-control" id ="SBN" type="number" min="1" name="SBN" value="{{ values.SBN }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="Accreditation Number"> Accreditation Number: </label>
+                    <input class="form-control" id ="Accreditation Number" type="number" min="1" name="Accreditation_Number" value="{{ values.Accreditation_Number }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="fc"> Facility Code: </label>
+                    <input class="form-control" id="fc" type="text" name="Facility_Code" value="{{ values.Facility_Code }}">
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <input class="form-control btn btn-info" type="submit" class="btn btn-info" value="Submit">
+            </div>
+
+            <div class="form-group">
+                <a class="btn btn-danger form-control" href="{% url 'taxes:display' %}" align="center">
+                    Back
+                </a>
+            </div>
+        </form>
+
+    {% else %}
+        <p> {{ table_name }} table does not exist </p>
+    {% endif %}
+
+    </div>
+</body>
